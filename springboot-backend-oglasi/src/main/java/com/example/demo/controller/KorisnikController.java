@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.exception.ResourceNotFoundException;
 import com.example.demo.model.Korisnik;
 import com.example.demo.repository.KorisnikRepository;
 
+@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @RequestMapping("/api/v1/")
 public class KorisnikController {
@@ -67,11 +69,13 @@ public class KorisnikController {
 	}
 	
 	//update
-	 @PutMapping("/korisnik")
-	 public ResponseEntity<Korisnik> updateKorisnik(@RequestBody Korisnik korisnik){
-		 if(!korisnikRepository.existsById(korisnik.getKorisnik_id()))
-				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-			korisnikRepository.save(korisnik);
-			return new ResponseEntity<>(HttpStatus.OK);
+	@PutMapping("/korisnik/{korisnik_id}")
+	public ResponseEntity<Korisnik> updateKorisnik(@PathVariable int korisnik_id, @RequestBody Korisnik korisnikInfo){
+		Korisnik korisnik = korisnikRepository.findById(korisnik_id).orElseThrow(() -> new ResourceNotFoundException("Korisnik not exist with id: " + korisnik_id));
+		korisnik.setIme(korisnikInfo.getIme());
+		korisnik.setSifra(korisnikInfo.getSifra());
+		korisnik.setBr_telefona(korisnik.getBr_telefona());
+		Korisnik updatedKorisnik = korisnikRepository.save(korisnik);
+		return ResponseEntity.ok(updatedKorisnik);
 	 }
 }
