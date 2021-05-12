@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 import ListOglasComponent from './components/ListOglasComponent';
 import HeaderComponent from './components/HeaderComponent';
@@ -7,7 +6,6 @@ import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import CreateKorisnikComponent from './components/CreateKorisnikComponent';
 import LogKorisnikComponent from './components/LogKorisnikComponent';
 import CreateOglasComponent from './components/CreateOglasComponent';
-import UpdateOglasComponent from './components/UpdateOglasComponent';
 import ViewOglasComponent from './components/ViewOglasComponent';
 
 function App() {
@@ -19,11 +17,11 @@ function App() {
             <div className="container">
               <Switch>
                 <Route path = "/" exact component = {ListOglasComponent}></Route>
-                <Route path = "/oglas" component = {ListOglasComponent}></Route>
-                <Route path = "/addOglas/:oglas_id" component = {CreateOglasComponent}></Route>
-                <Route path = "/viewOglas/:oglas_id" component = {ViewOglasComponent}></Route>
-                <Route path = "/signUp" component = {CreateKorisnikComponent}></Route>
-                <Route path = "/logIn" component = {LogKorisnikComponent}></Route>
+                <Route path = "/oglas"  exact component = {ListOglasComponent}></Route>
+                <Route path = "/addOglas/:oglas_id" exact component = {CreateOglasComponent}></Route>
+                <Route path = "/viewOglas/:oglas_id" exact component = {ViewOglasComponent}></Route>
+                <Route path = "/singUp"  exact component = {CreateKorisnikComponent}></Route>
+                <Route path = "/logIn"  exact component = {LogKorisnikComponent}></Route>
               </Switch>
             </div>
           <FooterComponent/>

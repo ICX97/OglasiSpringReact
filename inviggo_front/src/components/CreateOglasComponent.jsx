@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
+import KorisnikService from '../services/KorisnikService';
 import OglasService from '../services/OglasService';
+import TipOglasaService from '../services/TipOglasaService';
 
 class CreateOglasComponent extends Component {
     constructor(props){
@@ -12,8 +14,10 @@ class CreateOglasComponent extends Component {
             cena: '',
             datum_postavljanja: '',
             url: '',
-            korisnik: '',
-            tipOglasa: ''
+            korisnik: [],
+            tipOglasa: [],
+            selectedTip: [],
+            validationError: ''
         }
         this.changeImeHandler = this.changeImeHandler.bind(this);
         this.changeOpisHandler = this.changeOpisHandler.bind(this);
@@ -21,7 +25,6 @@ class CreateOglasComponent extends Component {
         this.changeCenaHandler = this.changeCenaHandler.bind(this);
         this.changeDatumHandler = this.changeDatumHandler.bind(this);
         this.changeUrlHandler = this.changeUrlHandler.bind(this);
-        this.changeKorisnikHandler = this.changeKorisnikHandler.bind(this);
         this.changeTipOglasaHandler = this.changeTipOglasaHandler.bind(this);
 
         this.saveOrUpdateOglas = this.saveOrUpdateOglas.bind(this);
@@ -29,6 +32,12 @@ class CreateOglasComponent extends Component {
 
     componentDidMount(){
         if(this.state.oglas_id == -1){
+            TipOglasaService.getTipOglasa().then((res)=>{
+                this.setState({tipOglasa: res.data});
+            });
+            KorisnikService.getKorisnikById(1).then((res)=>{
+                this.setState({korisnik: res.data});
+            });
             return
         }
         else{
@@ -78,9 +87,9 @@ class CreateOglasComponent extends Component {
     changeUrlHandler = (event) =>{
         this.setState({url: event.target.value})
     }
-    changeKorisnikHandler = (event) =>{
-        this.setState({korisnik: event.target.value})
-    }
+    // changeKorisnikHandler = (event) =>{
+    //     this.setState({korisnik: event.target.value})
+    // }
     changeTipOglasaHandler = (event) =>{
         this.setState({tipOglasa: event.target.value})
     }
@@ -96,6 +105,7 @@ class CreateOglasComponent extends Component {
         }
     }
     render() {
+        
         return (
             <div>
                 <div className= "container">
@@ -132,16 +142,29 @@ class CreateOglasComponent extends Component {
                                         <input placeholder="Url" name="url" className="form-control"
                                         value={this.state.url} onChange={this.changeUrlHandler}/>
                                     </div>
-                                    <div className="form-group">
+                                    {/* <div className="form-group">
                                         <label>Korisnik</label>
                                         <input placeholder="Korisnik" name="korisnik" className="form-control"
                                         value={this.state.korisnik} onChange={this.changeKorisnikHandler}/>
-                                    </div>
-                                    <div className="form-group">
+                                    </div> */}
+                                    {/* <div className="form-group">
                                         <label>tipOglasa</label>
                                         <input placeholder="tipOglasa" name="tipOglasa" className="form-control"
                                         value={this.state.tipOglasa} onChange={this.changeTipOglasaHandler}/>
+                                    </div> */}
+                                    <div className="form-group">
+                                        <select
+                                            value={this.state.selectedTip}
+                                            onChange={e => this.setState({selectedTip: e.target.value,validationError: e.target.value === "" ? "Izaberite kategoriju oglasa" : ""})}
+                                            > 
+                                            {this.state.tipOglasa.map((tipOglasa) =>
+                                            <option key={tipOglasa.value} value={tipOglasa.value}>{tipOglasa.naziv}</option>)}
+                                        </select>
+                                        <div style={{color: 'red', marginTop: '6px'}}>
+                                            {this.state.validationError}
+                                        </div>
                                     </div>
+
                                     <button className="btn btn-success" onClick={this.saveOrUpdateOglas}>Save</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
                                 </form>

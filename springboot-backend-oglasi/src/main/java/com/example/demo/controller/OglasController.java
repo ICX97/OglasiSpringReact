@@ -46,18 +46,13 @@ public class OglasController {
 	public ResponseEntity<Oglas> deleteOglas(@PathVariable ("oglas_id") Integer oglas_id){
 		if(!oglasRepository.existsById(oglas_id))
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		//jdbcTemplate.execute("delete from oglas where korisnik_id = "+korisnik_id);
 		oglasRepository.deleteById(oglas_id);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	//post
 	@PostMapping("/oglas")
-	public ResponseEntity<Oglas> insertOglas(@RequestBody Oglas oglas){
-		if(!oglasRepository.existsById(oglas.getOglas_id())) {
-			oglasRepository.save(oglas);
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
-		return new ResponseEntity<>(HttpStatus.CONFLICT);
+	public Oglas insertOglas(@RequestBody Oglas oglas){
+			return oglasRepository.save(oglas);
 	}
 	
 	//update

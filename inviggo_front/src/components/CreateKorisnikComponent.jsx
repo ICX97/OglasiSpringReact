@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+import { withRouter } from "react-router-dom";
+
 class CreateKorisnikComponent extends Component {
     constructor(props){
         super(props)
@@ -8,34 +10,45 @@ class CreateKorisnikComponent extends Component {
             ime: '',
             sifra: '',
             grad: '',
+            email: '',
+            datum: '',
+            status: '',
             brTelefona: ''
         }
-        this.changeImeHandler = this.changeImeHandler.bind(this);
-        this.changeSifraHandler = this.changeSifraHandler.bind(this);
-        this.changeGradHandler = this.changeGradHandler.bind(this);
-        this.changeBrTelefonaHandler = this.changeBrTelefonaHandler.bind(this);
-        this.saveKorisnik = this.saveKorisnik.bing(this);
+        // this.changeImeHandler = this.changeImeHandler.bind(this);
+        // this.changeSifraHandler = this.changeSifraHandler.bind(this);
+        // this.changeGradHandler = this.changeGradHandler.bind(this);
+        // this.changeBrTelefonaHandler = this.changeBrTelefonaHandler.bind(this);
+        // this.saveKorisnik = this.saveKorisnik.bing(this);
+        // this.changeEmailHandler = this.changeEmailHandler.bing(this);
+        // this.changeStatusHandler = this.changeStatusHandler.bing(this);
     }
 
-    saveKorisnik = (e) => {
-        e.preventDefault();
-        let korisnik = {ime: this.state.ime, sifra: this.state.sifra, grad: this.state.grad, brTelefona: this.state.brTelefona};
-        console.log('korisnik =>' + JSON.stringify(korisnik)); 
-    }
+    // saveKorisnik = (e) => {
+    //     e.preventDefault();
+    //     let korisnik = {ime: this.state.ime, sifra: this.state.sifra,email: this.state.email,status: this.state.status, grad: this.state.grad, brTelefona: this.state.brTelefona};
+    //     console.log('korisnik =>' + JSON.stringify(korisnik)); 
+    // }
 
-    changeImeHandler = (event) =>{
-        this.setState({ime: event.target.value})
-    }
+    // changeImeHandler = (event) =>{
+    //     this.setState({ime: event.target.value})
+    // }
 
-    changeSifraHandler = (event) =>{
-        this.setState({sifra: event.target.value})
-    }
-    changeGradHandler = (event) =>{
-        this.setState({grad: event.target.value})
-    }
-    changeBrTelefonaHandler = (event) =>{
-        this.setState({brTelefona: event.target.value})
-    }
+    // changeSifraHandler = (event) =>{
+    //     this.setState({sifra: event.target.value})
+    // }
+    // changeEmailHandler = (event) =>{
+    //     this.setState({email: event.target.value})
+    // }
+    // changeGradHandler = (event) =>{
+    //     this.setState({grad: event.target.value})
+    // }
+    // changeBrTelefonaHandler = (event) =>{
+    //     this.setState({brTelefona: event.target.value})
+    // }
+    // changeStatusHandler = (event) =>{
+    //     this.setState({status: event.target.value})
+    // }
 
     cancel(){
         this.props.history.push('/oglas');
@@ -65,11 +78,22 @@ class CreateKorisnikComponent extends Component {
                                         value={this.state.grad} onChange={this.changeGradHandler}/>
                                     </div>
                                     <div className="form-group">
+                                        <label>Email</label>
+                                        <input placeholder="Email" name="email" className="form-control"
+                                        value={this.state.email} onChange={this.changeEmailHandler}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label>Status</label>
+                                        <input placeholder="Status" name="status" className="form-control"
+                                        value={this.state.status} onChange={this.changeStatusHandler}/>
+                                    </div>
+                                    <div className="form-group">
                                         <label>Telephone number</label>
                                         <input placeholder="Number" name="brTelefona" className="form-control"
                                         value={this.state.brTelefona} onChange={this.changeBrTelefonaHandler}/>
                                     </div>
-                                    <button className="btn btn-success" onClick={this.saveKorisnik}>Save</button>
+                                    {/* <button className="btn btn-success" onClick={this.saveKorisnik}>Save</button> */}
+                                    <button className="btn btn-success" >Save</button>
                                     <button className="btn btn-danger" onClick={this.cancel.bind(this)} style={{marginLeft: "10px"}}>Cancel</button>
                                 </form>
                             </div>

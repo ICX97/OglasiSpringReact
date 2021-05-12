@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import {Link} from 'react-router-dom';
 class HeaderComponent extends Component {
     constructor(props){
         super(props)
@@ -7,15 +7,23 @@ class HeaderComponent extends Component {
 
         }
     }
+
     render() {
+        
         return (
             <div>
                 <header>
                     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
-                        <div>
-                            <h1 className="navbar-brand">Oglasi inviggo</h1>
-                            <button style={{marginLeft: "10px"}} className ="btn btn-primary"  onClick={this.SignUp}>Sing Up</button>
-                            <button style={{marginLeft: "10px"}} className ="btn btn-primary"  onClick={this.LogIn}>Log in</button>
+                        <div className="row">
+                            <h1 style={{marginLeft: "15px"}} className="navbar-brand">Oglasi inviggo</h1>
+                            <Link style={{marginLeft: "1100px"},{marginTop: "10px"}} to="/singUp">
+                                <ul>Sing Up</ul>
+                            </Link>
+                            <Link  style={{marginLeft: "1100px"},{marginTop: "10px"}} to="/logIn">
+                                <ul>
+                                Log In
+                                </ul>
+                            </Link>
                         </div>
                     </nav>
                 </header>

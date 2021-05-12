@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import OglasService from '../services/OglasService';
-import BootstrapPaginator from 'react-bootstrap-pagination';
 import Pagination from './Pagination';
+
 
 class ListOglasComponent extends Component {
     constructor(props){
@@ -50,7 +50,7 @@ class ListOglasComponent extends Component {
 
         return (
             <div>
-                <h2 className="text-center">Lista oglasa</h2>
+                <h2 style={{margin: "10px"}} className="text-center">Lista oglasa</h2>
                 <div className="row">
                     <button style={{margin: "10px"}} className="btn btn-primary" onClick={this.addOglas}>Add Oglas</button>
                 </div>
@@ -59,13 +59,13 @@ class ListOglasComponent extends Component {
                         <thead>
                             <tr>
                                 <th>url</th>
-                                <th>Oglas ime</th>
-                                <th>Oglas cena</th>
-                                <th>Ogras opis</th>
-                                <th>Oglas grad</th>
-                                <th>Oglas datum</th>
-                                <th>Oglas korisnik</th>
-                                <th>Oglas tip oglasa</th>
+                                <th>Naslov</th>
+                                <th>Cena</th>
+                                <th>Opis</th>
+                                <th>Grad</th>
+                                <th>Datum</th>
+                                <th>Korisnik</th>
+                                <th>Kategorija</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -74,7 +74,7 @@ class ListOglasComponent extends Component {
                                 this.state.oglasi.map(
                                     oglasi =>
                                     <tr key = {oglasi.oglas_id}>
-                                        <td>{oglasi.url}</td>
+                                        <td><image src="../../public/images/default.png" height="200" width="200"></image>{oglasi.url}</td>
                                         <td>{oglasi.ime_oglasa}</td>
                                         <td>{oglasi.cena}</td>
                                         <td>{oglasi.opis}</td>
@@ -84,8 +84,8 @@ class ListOglasComponent extends Component {
                                         <td>{oglasi.tipOglasa.naziv}</td>
                                         <td>
                                             <button onClick= {()=> this.editOglas(oglasi.oglas_id)} className="btn btn-info">Update</button>
-                                            <button style={{marginLeft: "10px"}} onClick= {()=> this.deleteOglas(oglasi.oglas_id)} className="btn btn-danger">Delete</button>
-                                            <button style={{marginLeft: "10px"}} onClick= {()=> this.viewOglas(oglasi.oglas_id)} className="btn btn-primary">View</button>
+                                            <button style={{margin: "5px"}} onClick= {()=> this.deleteOglas(oglasi.oglas_id)} className="btn btn-danger">Delete</button>
+                                            <button style={{margin: "5px"}} onClick= {()=> this.viewOglas(oglasi.oglas_id)} className="btn btn-primary">View</button>
                                             
                                         </td>
                                     </tr>
