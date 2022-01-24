@@ -8,7 +8,6 @@ class ListOglasComponent extends Component {
         super(props)
         this.state = {
             currentPage:1,
-            postsPerPage: 20,
             oglasi: []
         }
         this.addOglas = this.addOglas.bind(this);
@@ -40,8 +39,8 @@ class ListOglasComponent extends Component {
 
 
     render() {
-        const { currentPage , postsPerPage } = this.state;
-        const indexOfLastPage = currentPage * postsPerPage;
+        const { currentPage } = this.state;
+        const indexOfLastPage = currentPage * this.state.oglasi.length;
         const paginate = pageNum => this.setState({currentPage: pageNum});
 
         const nextPage = () => this.setState({currentPage: currentPage + 1 });
@@ -50,7 +49,7 @@ class ListOglasComponent extends Component {
 
         return (
             <div>
-                <h2 style={{margin: "10px"}} className="text-center">Lista oglasa</h2>
+                <h2 style={{margin: "10px"}} clas   sName="text-center">Lista oglasa</h2>
                 <div className="row">
                     <button style={{margin: "10px"}} className="btn btn-primary" onClick={this.addOglas}>Add Oglas</button>
                 </div>
@@ -92,7 +91,7 @@ class ListOglasComponent extends Component {
                                 )
                             }
                         </tbody>
-                        <Pagination postsPerPage={postsPerPage} totalPosts={this.state.oglasi.length} paginate={paginate} nextPage={nextPage} prevPage={prevPage}></Pagination>
+                        <Pagination postsPerPage={10} totalPosts={this.state.oglasi} paginate={paginate} nextPage={nextPage} prevPage={prevPage}></Pagination>
                     </table>
 
                 </div>

@@ -17,6 +17,7 @@ class CreateOglasComponent extends Component {
             korisnik: [],
             tipOglasa: [],
             selectedTip: [],
+            selectedKorisnik: [],
             validationError: ''
         }
         this.changeImeHandler = this.changeImeHandler.bind(this);
@@ -26,8 +27,9 @@ class CreateOglasComponent extends Component {
         this.changeDatumHandler = this.changeDatumHandler.bind(this);
         this.changeUrlHandler = this.changeUrlHandler.bind(this);
         this.changeTipOglasaHandler = this.changeTipOglasaHandler.bind(this);
-
+        this.changeSelectedTipHandler = this.changeSelectedTipHandler.bind(this);
         this.saveOrUpdateOglas = this.saveOrUpdateOglas.bind(this);
+        this.changeSelectedKorisnikHandler = this.changeSelectedKorisnikHandler.bind(this);
     }
 
     componentDidMount(){
@@ -35,7 +37,7 @@ class CreateOglasComponent extends Component {
             TipOglasaService.getTipOglasa().then((res)=>{
                 this.setState({tipOglasa: res.data});
             });
-            KorisnikService.getKorisnikById(1).then((res)=>{
+            KorisnikService.getKorisnik().then((res)=>{
                 this.setState({korisnik: res.data});
             });
             return
@@ -43,15 +45,41 @@ class CreateOglasComponent extends Component {
         else{
             OglasService.getOglasById(this.state.oglas_id).then((res)=>{
                 let oglas = res.data;
-                this.setState({ime_oglasa: oglas.ime_oglasa, opis: oglas.opis, grad: oglas.grad,cena: oglas.cena});
+                this.setState({ime_oglasa: oglas.ime_oglasa, opis: oglas.opis,
+                     grad: oglas.grad,cena: oglas.cena, url:oglas.url});
+            });
+            TipOglasaService.getTipOglasa().then((res)=>{
+                this.setState({tipOglasa: res.data});
+            });
+            KorisnikService.getKorisnik().then((res)=>{
+                this.setState({korisnik: res.data});
             });
         }
     }
 
     saveOrUpdateOglas = (e) => {
         e.preventDefault();
+        console.log(" nrdyo " + JSON.stringify(this.state.selectedTip));
+        console.log(" tip " + JSON.stringify(this.state.selected));
+        // var danas = new Date(); 
+        // var godina = danas.getYear();
+		// if(godina < 1000){
+		// 	godina += 1900
+		// }
+        // var  mesec=danas.getMonth()+1;
+        // console.log("vreme " + godina + "/" + mesec+ "/" +danas.getDate());
+        // var vreme = godina + "-" + mesec+ "-" +danas.getDate();
+        let selectedT;
+        this.state.tipOglasa.forEach(element => {if(element.naziv==this.state.selectedTip){
+            selectedT = element;
+        }});
+        let selectedK;
+        this.state.korisnik.forEach(element => {if(element.ime==this.state.selectedKorisnik){
+            selectedK = element;
+        }});
+            
         let oglas = {ime_oglasa: this.state.ime_oglasa, opis: this.state.opis, grad: this.state.grad,
-             cena: this.state.cena,datum_postavljanja: "2019-12-31T23:00:00.000+00:00",url: this.state.url,korisnik: this.state.korisnik,tipOglasa: this.state.tipOglasa};
+        cena: this.state.cena,datum_postavljanja: Date.now(),url: this.state.url, tipOglasa:selectedT,korisnik: selectedK};
         console.log('oglas =>' + JSON.stringify(oglas)); 
 
         if(this.state.oglas_id == -1){
@@ -63,15 +91,20 @@ class CreateOglasComponent extends Component {
             OglasService.updateOglas(oglas,this.state.oglas_id).then(res=>{
                 this.props.history.push('/oglas');
             });
-        
         }
-
     }
+
+    //getTipOglasa(){
+     //   if(this.state.oglas_id == -1){
+       //     return this.state.selectedTip
+        //}else{
+        //    return this.state.tipOglasa.naziv
+       //}
+    //}
 
     changeImeHandler = (event) =>{
         this.setState({ime_oglasa: event.target.value})
     }
-
     changeOpisHandler = (event) =>{
         this.setState({opis: event.target.value})
     }
@@ -87,12 +120,18 @@ class CreateOglasComponent extends Component {
     changeUrlHandler = (event) =>{
         this.setState({url: event.target.value})
     }
-    // changeKorisnikHandler = (event) =>{
-    //     this.setState({korisnik: event.target.value})
-    // }
+     changeKorisnikHandler = (event) =>{
+         this.setState({korisnik: event.target.value})
+     }
     changeTipOglasaHandler = (event) =>{
         this.setState({tipOglasa: event.target.value})
     }
+    changeSelectedTipHandler = (event) =>{
+        this.setState({selectedTip: event.target.value})
+    }
+    changeSelectedKorisnikHandler = (event) =>{
+        this.setState({selectedKorisnik: event.target.value})
+    }    
 
     cancel(){
         this.props.history.push('/oglas');
@@ -134,7 +173,7 @@ class CreateOglasComponent extends Component {
                                     <div className="form-group">
                                         <label>Cena</label>
                                         <input placeholder="Cena" name="cena" className="form-control"
-                                        value={this.state.brTelefona} onChange={this.changeCenaHandler}/>
+                                        value={this.state.cena} onChange={this.changeCenaHandler}/>
                                     </div>
                                     
                                     <div className="form-group">
@@ -142,23 +181,29 @@ class CreateOglasComponent extends Component {
                                         <input placeholder="Url" name="url" className="form-control"
                                         value={this.state.url} onChange={this.changeUrlHandler}/>
                                     </div>
-                                    {/* <div className="form-group">
-                                        <label>Korisnik</label>
-                                        <input placeholder="Korisnik" name="korisnik" className="form-control"
-                                        value={this.state.korisnik} onChange={this.changeKorisnikHandler}/>
-                                    </div> */}
-                                    {/* <div className="form-group">
-                                        <label>tipOglasa</label>
-                                        <input placeholder="tipOglasa" name="tipOglasa" className="form-control"
-                                        value={this.state.tipOglasa} onChange={this.changeTipOglasaHandler}/>
-                                    </div> */}
+                                    
                                     <div className="form-group">
                                         <select
                                             value={this.state.selectedTip}
-                                            onChange={e => this.setState({selectedTip: e.target.value,validationError: e.target.value === "" ? "Izaberite kategoriju oglasa" : ""})}
+                                            /*onChange={e => this.setState({selectedTip: e.target.value})}*/
+                                            onChange={this.changeSelectedTipHandler}
                                             > 
                                             {this.state.tipOglasa.map((tipOglasa) =>
                                             <option key={tipOglasa.value} value={tipOglasa.value}>{tipOglasa.naziv}</option>)}
+                                        </select>
+                                        <div style={{color: 'red', marginTop: '6px'}}>
+                                            {this.state.validationError}
+                                        </div>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <select
+                                            value={this.state.selectedKorisnik}
+                                            /*onChange={e => this.setState({selectedTip: e.target.value})}*/
+                                            onChange={this.changeSelectedKorisnikHandler}
+                                            > 
+                                            {this.state.korisnik.map((korisnik) =>
+                                            <option key={korisnik.value} value={korisnik.value}>{korisnik.ime}</option>)}
                                         </select>
                                         <div style={{color: 'red', marginTop: '6px'}}>
                                             {this.state.validationError}

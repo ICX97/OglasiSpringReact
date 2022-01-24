@@ -1,9 +1,22 @@
 import React, { Component } from 'react';
+import OglasService from '../services/OglasService';
 
 class Pagination extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+        oglasi: [], 
+    } 
+}
+  componentDidMount(){
+    OglasService.getOglas().then((res)=>{
+        this.setState({oglasi: res.data});
+    });
+  }
   render() {
     const {postsPerPage, totalPosts,paginate, nextPage, prevPage } = this.props;
     const pageNumbers = [];
+
     for (let i = 1; i <= Math.ceil(totalPosts / postsPerPage); i++) {
       pageNumbers.push(i);
     }

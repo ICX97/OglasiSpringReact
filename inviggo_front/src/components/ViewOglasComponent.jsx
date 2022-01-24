@@ -6,10 +6,22 @@ class ViewOglasComponent extends Component {
         super(props)
         this.state = {
             oglas_id: this.props.match.params.oglas_id,
-            oglasi: []
+            oglasi: [],
+            sviOglasi: []   
         }
         this.editOglas = this.editOglas.bind(this);
         this.deleteOglas = this.deleteOglas.bind(this);
+    }
+
+    componentDidMount(){
+        OglasService.getOglasById(this.state.oglas_id).then(res => {
+            this.setState({oglasi: res.data});
+            console.log(this.state.oglasi);
+        });
+        OglasService.getOglas().then((res)=>{
+            this.setState({sviOglasi: res.data});
+        });
+        
     }
 
     editOglas(oglas_id){
@@ -17,18 +29,15 @@ class ViewOglasComponent extends Component {
     }
 
     deleteOglas(oglas_id){
+        console.log(this.state.oglasi);
         OglasService.deleteOglas(oglas_id).then(res=> {
-            this.setState({oglasi: this.state.oglasi.filter(oglas => oglas.oglas_id !== oglas_id)})
-        });
-        this.props.history.push('/oglas');
-    }
-
-    componentDidMount(){
-        OglasService.getOglasById(this.state.oglas_id).then(res => {
-            this.setState({oglasi: res.data});
+            this.setState({sviOglasi: this.state.sviOglasi.filter(oglas => this.state.oglas_id !== oglas_id)})
+            this.props.history.push('/oglas');
         });
     }
 
+    
+    
     render() {
         return (
             <div>

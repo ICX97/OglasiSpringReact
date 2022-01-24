@@ -7,7 +7,7 @@ class LogKorisnikComponent extends Component {
             
         }
     }
-    cancel(){
+    cancel(){   
         this.props.history.push('/oglas');
     }
     render() {

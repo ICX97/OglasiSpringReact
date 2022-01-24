@@ -15,7 +15,9 @@ class HeaderComponent extends Component {
                 <header>
                     <nav className="navbar navbar-expand-md navbar-dark bg-dark">
                         <div className="row">
-                            <h1 style={{marginLeft: "15px"}} className="navbar-brand">Oglasi inviggo</h1>
+                            <Link style={{marginLeft: "1100px"},{marginTop: "10px"}} to="/oglas">
+                                <ul>Oglasi</ul>
+                            </Link>
                             <Link style={{marginLeft: "1100px"},{marginTop: "10px"}} to="/singUp">
                                 <ul>Sing Up</ul>
                             </Link>
