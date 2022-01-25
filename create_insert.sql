@@ -1,32 +1,4 @@
-create database if not exists oglasi_inviggo;
 create schema if not exists db;
-/*CREATE TABLE if not exists db.auth_role (
-  auth_role_id int auto_increment primary key,
-  role_name varchar(255) DEFAULT NULL,
-  role_desc varchar(255) DEFAULT NULL
-);
-INSERT INTO db.auth_role VALUES (1,'SUPER_USER','This user has ultimate rights for everything');
-INSERT INTO db.auth_role VALUES (2,'ADMIN_USER','This user has admin rights for administrative work');
-INSERT INTO db.auth_role VALUES (3,'SITE_USER','This user has access to site, after login - normal user');
-*/
-/*CREATE TABLE if not exists db.korisnik (
-  korisnik_id int auto_increment primary key,
-  ime varchar(255) NOT NULL,
-  email varchar(255) NOT NULL,
-  sifra varchar(255) NOT NULL,
-  datum_registracije date not null,
-  br_telefona varchar(250) not null,
-  status varchar(255)
-);*/
-
-/*CREATE TABLE if not exists db.auth_korisnik_role (
-  korisnik_id int ,
-  auth_role_id int NOT NULL,
-  PRIMARY KEY (korisnik_id,auth_role_id),
-  KEY FK_korisnik_role (auth_role_id),
-  CONSTRAINT FK_auth_korisnik FOREIGN KEY (korisnik_id) REFERENCES db.korisnik (korisnik_id),
-  CONSTRAINT FK_auth_korisnik_role FOREIGN KEY (auth_role_id) REFERENCES db.auth_role (auth_role_id)
-) ;*/
 
  CREATE TABLE if not exists db.korisnik (
   korisnik_id int auto_increment primary key,
@@ -36,7 +8,6 @@ INSERT INTO db.auth_role VALUES (3,'SITE_USER','This user has access to site, af
   br_telefona varchar(250) not null
 );
 
-
 create table if not exists db.tipOglasa (
 	tip_id int auto_increment primary key,
     naziv varchar(250) not null
@@ -45,7 +16,7 @@ create table if not exists db.oglas (
 	oglas_id int auto_increment primary key,
     ime_oglasa varchar(250) not null,
     opis varchar(550) not null,
-    datum_postavljanja date not null,
+    datum_postavljanja varchar(250) not null,
 	url varchar(550),
     cena varchar(50) not null,
     grad varchar(100) not null,
@@ -76,11 +47,12 @@ insert into db.korisnik values (7,"Marija","marija123","2020/1/1","062274578");
 insert into db.korisnik values (8,"Aleksandra","aleksanra123","2020/1/1","062524578");
 insert into db.korisnik values (9,"Milica","milica123","2020/1/1","062224538");
 insert into db.korisnik values (10,"Anja","anja123","2020/1/1","062224518");
+insert into db.korisnik values (11,"Svetlana","ceca","2020/1/1","062224123");
 
 
+select * from db.oglas
 
-
-insert into db.oglas values (1,"Oglas1","Opis1","2020/1/1","urlneki","300","Novi Sad",1,1);
+insert into db.oglas values (1,"Oglas1","Opis1","2020/1/1","urlneki","300","Novi Sad",2,2);
 insert into db.oglas values (2,"Ogla2","Opis2","2020/1/1","urlneki","300","Novi Sad",1,1);
 insert into db.oglas values (3,"Oglas3","Opis3","2020/1/1","urlneki","300","Novi Sad",1,1);
 insert into db.oglas values (4,"Oglas4","Opis3","2020/1/1","urlneki","300","Novi Sad",1,1);
@@ -122,7 +94,6 @@ insert into db.oglas values (39,"Oglas39","Opis","2020/1/1","urlneki","300","Nov
 insert into db.oglas values (40,"Oglas40","Opis","2020/1/1","urlneki","300","Novi Sad",1,1);
 insert into db.oglas values (41,"Oglas41","Opis","2020/1/1","urlneki","300","Novi Sad",1,1);
 insert into db.oglas values (42,"Oglas42","Opis","2020/1/1","urlneki","300","Novi Sad",1,1);
-insert into db.oglas values (43,"Oglas43","Opis","2020/1/1","urlneki","300","Novi Sad",1,1);
 insert into db.oglas values (43,"Oglas43","Opis","2020/1/1","urlneki","300","Novi Sad",1,1);
 insert into db.oglas values (44,"Oglas43","Opis","2020/1/1","urlneki","300","Novi Sad",1,1);
 insert into db.oglas values (45,"Oglas43","Opis","2020/1/1","urlneki","300","Novi Sad",1,1);

@@ -61,14 +61,14 @@ class CreateOglasComponent extends Component {
         e.preventDefault();
         console.log(" nrdyo " + JSON.stringify(this.state.selectedTip));
         console.log(" tip " + JSON.stringify(this.state.selected));
-        // var danas = new Date(); 
-        // var godina = danas.getYear();
-		// if(godina < 1000){
-		// 	godina += 1900
-		// }
-        // var  mesec=danas.getMonth()+1;
-        // console.log("vreme " + godina + "/" + mesec+ "/" +danas.getDate());
-        // var vreme = godina + "-" + mesec+ "-" +danas.getDate();
+        var danas = new Date(); 
+        var godina = danas.getYear();
+		if(godina < 1000){
+			godina += 1900
+		}
+        var  mesec=danas.getMonth()+1;
+        console.log("vreme " + godina + "/" + mesec+ "/" +danas.getDate());
+        var vreme = godina + "/" + mesec+ "/" +danas.getDate();
         let selectedT;
         this.state.tipOglasa.forEach(element => {if(element.naziv==this.state.selectedTip){
             selectedT = element;
@@ -79,7 +79,7 @@ class CreateOglasComponent extends Component {
         }});
             
         let oglas = {ime_oglasa: this.state.ime_oglasa, opis: this.state.opis, grad: this.state.grad,
-        cena: this.state.cena,datum_postavljanja: Date.now(),url: this.state.url, tipOglasa:selectedT,korisnik: selectedK};
+        cena: this.state.cena,datum_postavljanja: vreme,url: this.state.url, tipOglasa:selectedT,korisnik: selectedK};
         console.log('oglas =>' + JSON.stringify(oglas)); 
 
         if(this.state.oglas_id == -1){
@@ -93,14 +93,6 @@ class CreateOglasComponent extends Component {
             });
         }
     }
-
-    //getTipOglasa(){
-     //   if(this.state.oglas_id == -1){
-       //     return this.state.selectedTip
-        //}else{
-        //    return this.state.tipOglasa.naziv
-       //}
-    //}
 
     changeImeHandler = (event) =>{
         this.setState({ime_oglasa: event.target.value})
@@ -185,7 +177,6 @@ class CreateOglasComponent extends Component {
                                     <div className="form-group">
                                         <select
                                             value={this.state.selectedTip}
-                                            /*onChange={e => this.setState({selectedTip: e.target.value})}*/
                                             onChange={this.changeSelectedTipHandler}
                                             > 
                                             {this.state.tipOglasa.map((tipOglasa) =>
@@ -199,7 +190,6 @@ class CreateOglasComponent extends Component {
                                     <div className="form-group">
                                         <select
                                             value={this.state.selectedKorisnik}
-                                            /*onChange={e => this.setState({selectedTip: e.target.value})}*/
                                             onChange={this.changeSelectedKorisnikHandler}
                                             > 
                                             {this.state.korisnik.map((korisnik) =>
